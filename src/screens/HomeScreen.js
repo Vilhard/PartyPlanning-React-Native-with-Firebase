@@ -9,7 +9,7 @@ import {
 import { Card, ListItem, Button, Icon } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import LinearGradient from "react-native-linear-gradient";
-import firebase from "../../Firebase";
+import firebase from "../../config/Firebase";
 import { HomeStyles } from "../Styles/HomeStyles";
 
 export default function HomeScreen() {
