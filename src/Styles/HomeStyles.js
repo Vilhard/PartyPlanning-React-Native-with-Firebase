@@ -18,16 +18,22 @@ export const HomeStyles = StyleSheet.create({
     alignItems: "center"
   },
   itemText: {
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "Montserrat-Light",
+    color: "white"
+    
   },
   itemContent: {
     fontSize: 14,
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "Montserrat-Light",
+    color: "white"
   },
   itemHeader: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center"
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 22, 
+    textAlign:"center",
+    color: "white"
   },
   iconList: {
     flex: 1,
@@ -37,6 +43,7 @@ export const HomeStyles = StyleSheet.create({
   },
   box: {
     width: "80%",
+    backgroundColor: "#FF7051",
     borderRadius: 25,
     borderWidth: 1,
     borderColor: "#ddd",

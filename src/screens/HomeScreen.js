@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
-import LinearGradient from "react-native-linear-gradient";
 import firebase from "../../config/Firebase";
+import * as Font from 'expo-font';
 import { HomeStyles } from "../Styles/HomeStyles";
 
 export default function HomeScreen() {
@@ -17,6 +17,10 @@ export default function HomeScreen() {
   const [partyList, setPartyList] = useState([]);
 
   useEffect(() => {
+    Font.loadAsync({
+      'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
+      'Montserrat-Bold': require('../../assets/fonts/Montserrat-SemiBold.ttf'),
+    });
     firebase
       .database()
       .ref("party/")
@@ -53,12 +57,10 @@ export default function HomeScreen() {
             {partyList.map((item, index) => {
               return (
                 <View key={index} style={HomeStyles.box}>
-                  <LinearGradient colors={["#4c669f", "#3b5998", "#192f6a"]}>
-                    <Text style={HomeStyles.itemHeader}>{item.name}</Text>
+                    <Text  style={HomeStyles.itemHeader}>{item.name}</Text>
                     <Text style={HomeStyles.itemContent}>{item.content}</Text>
                     <Text style={HomeStyles.itemText}>{item.location}</Text>
                     <Text style={HomeStyles.itemText}>{item.time}</Text>
-                  </LinearGradient>
                   <View style={HomeStyles.iconList}>
                     <Icon
                       raised
