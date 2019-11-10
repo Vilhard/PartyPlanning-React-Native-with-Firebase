@@ -18,7 +18,7 @@ const AppNavigator = createStackNavigator(
     HomeScreen: {
       screen: HomeScreen,
       navigationOptions: {
-        title: "Home"
+        title: "My Parties",
       }
     },
     AddParty: {
@@ -36,11 +36,15 @@ const AppNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTintColor: "#000",
+      headerTintColor: '#000',
       headerStyle: {
-        backgroundColor: "#FFFFFF",
+        fontWeight: 'bold',
+        backgroundColor: "#fff",
         elevation: 0, // remove shadow on Android
         shadowOpacity: 0 // remove shadow on iOS
+      },
+      headerTitleStyle: {
+        fontSize: 20
       }
     },
     initialRouteName: "HomeScreen"

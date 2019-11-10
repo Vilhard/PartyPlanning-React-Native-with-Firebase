@@ -14,14 +14,14 @@ export default function Party() {
     firebase
       .database()
       .ref("party/")
-      .push({ name: name, content: content, location: location, time: time });
+      .push({ name: name, content: content, location: location, time: time }).key;
   };
 
   return (
     <View style={{ padding: 20 }}>
       <Input
         placeholder="Name of the party"
-        label="Product"
+        label="Name"
         style={{ width: 200, borderColor: "gray", borderWidth: 1 }}
         onChangeText={name => setName(name)}
         value={name}

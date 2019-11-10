@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -10,11 +10,12 @@ import { Card, ListItem, Button, Icon } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
 import * as Font from 'expo-font';
-import { HomeStyles } from "../Styles/HomeStyles";
+import { HomeStyles } from "../styles/HomeStyles";
 
 export default function HomeScreen() {
   const { navigate } = useNavigation();
   const [partyList, setPartyList] = useState([]);
+  const [key, setKey] = useState("");
 
   useEffect(() => {
     Font.loadAsync({
@@ -27,11 +28,16 @@ export default function HomeScreen() {
       .on("value", snapshot => {
         const data = snapshot.val();
         const prods = Object.values(data);
-        //const keys = Object.keys(data);
+        const key = Object.keys(snapshot.val())[0];
         setPartyList(prods);
-        //setId(keys);
+        setKey(key);
+        console.log(key)
       });
   }, []);
+
+  deleteData = () => {
+    firebase.database().ref("party/"+ key).remove();
+  };
 
   return (
     <View
@@ -54,9 +60,9 @@ export default function HomeScreen() {
       <View style={HomeStyles.ContentBox}>
         <ScrollView>
           <View style={HomeStyles.itemsList}>
-            {partyList.map((item, index) => {
+            {partyList.map((item, key) => {
               return (
-                <View key={index} style={HomeStyles.box}>
+                <View key={key} itemKey={key} style={HomeStyles.box}>
                     <Text  style={HomeStyles.itemHeader}>{item.name}</Text>
                     <Text style={HomeStyles.itemContent}>{item.content}</Text>
                     <Text style={HomeStyles.itemText}>{item.location}</Text>
@@ -76,6 +82,7 @@ export default function HomeScreen() {
                       name="trash"
                       type="font-awesome"
                       color="#f50"
+                      onPress={deleteData}
                     />
                   </View>
                 </View>
