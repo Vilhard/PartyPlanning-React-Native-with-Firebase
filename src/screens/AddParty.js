@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
 import { StyleSheet, Text, View } from "react-native";
 import { Input, Button } from "react-native-elements";
-import { ListItem } from "react-native-elements";
+import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+
 
 export default function Party() {
+  const { navigate } = useNavigation();
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [location, setLocation] = useState("");
@@ -14,7 +16,14 @@ export default function Party() {
     firebase
       .database()
       .ref("party/")
-      .push({ name: name, content: content, location: location, time: time }).key;
+      .push({ name: name, content: content, location: location, time: time })
+      .then(() => navigate("HomeScreen"))
+      .then((data) => {
+        console.log("data ", data)
+      })
+      .catch((error) => {
+        console.log("error ", error);
+      });
   };
 
   return (

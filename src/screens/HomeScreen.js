@@ -15,7 +15,13 @@ import { HomeStyles } from "../styles/HomeStyles";
 export default function HomeScreen() {
   const { navigate } = useNavigation();
   const [partyList, setPartyList] = useState([]);
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState([]);
+
+  /*Not working!
+  HomeScreen.navigationOptions = () => ({
+    title: useNavigationParam('title', /* your default title )
+  }); 
+  */
 
   useEffect(() => {
     Font.loadAsync({
@@ -28,15 +34,15 @@ export default function HomeScreen() {
       .on("value", snapshot => {
         const data = snapshot.val();
         const prods = Object.values(data);
-        const key = Object.keys(snapshot.val())[0];
+        const key = Object.keys(data);
         setPartyList(prods);
         setKey(key);
         console.log(key)
       });
   }, []);
 
-  deleteData = () => {
-    firebase.database().ref("party/"+ key).remove();
+  const deleteData = (index) => {
+    firebase.database().ref("party/"+ key[index]).remove();
   };
 
   return (
@@ -60,9 +66,9 @@ export default function HomeScreen() {
       <View style={HomeStyles.ContentBox}>
         <ScrollView>
           <View style={HomeStyles.itemsList}>
-            {partyList.map((item, key) => {
+            {partyList.map((item, index) => {
               return (
-                <View key={key} itemKey={key} style={HomeStyles.box}>
+                <View key={index} style={HomeStyles.box}>
                     <Text  style={HomeStyles.itemHeader}>{item.name}</Text>
                     <Text style={HomeStyles.itemContent}>{item.content}</Text>
                     <Text style={HomeStyles.itemText}>{item.location}</Text>
@@ -74,7 +80,9 @@ export default function HomeScreen() {
                       type="font-awesome"
                       color="#f50"
                       onPress={() => {
-                        navigate("EditParty");
+                        navigate("EditParty", { index:key[index],
+                          name: item.name, content:item.content, location:item.location, time: item.time
+                        });
                       }}
                     />
                     <Icon
@@ -82,7 +90,7 @@ export default function HomeScreen() {
                       name="trash"
                       type="font-awesome"
                       color="#f50"
-                      onPress={deleteData}
+                      onPress={() => deleteData(index)}
                     />
                   </View>
                 </View>

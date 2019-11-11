@@ -1,40 +1,77 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
-import { Button } from "react-native-elements";
-
-
+import { Input, Button } from "react-native-elements";
+import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 
 export default function EditParty() {
-  const [key, setKey] = useState("");
-  const [name, setName] = useState("")
-  const [content, setContent] = useState("");
-  const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const { navigate } = useNavigation();
+ const name = useNavigationParam("name");
+ const location = useNavigationParam("location");
+ const content = useNavigationParam("content");
+ const time = useNavigationParam("time");
+ const index = useNavigationParam("index")
 
-  useEffect(() => {
-    
-  })
+ const [newName, setNewName] = useState(name);
+ const [newLocation, setNewLocation] = useState(location);
+ const [newContent, setNewContent] = useState(content);
+ const [newTime, setNewTime] = useState(time);
+  // Need to update the party by index... not working atm
+ const updateParty = () => {
+  firebase
+  .database()
+  .ref("party/" + index)
+  .push({ name: newName, content: newContent, location: newLocation, time: newTime })
+  .then(() => navigate("HomeScreen"))
+ }
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Edit Party</Text>
+    <View style={{ padding: 20 }}>
+      <Input
+        placeholder={name}
+        label="Name"
+        style={{ width: 200, borderColor: "gray", borderWidth: 1 }}
+        onChangeText={newName => setNewName(newName)}
+        value={newName}
+      ></Input>
+      <Input
+        placeholder={content}
+        label="Content"
+        style={{
+          width: 200,
+          borderColor: "gray",
+          borderWidth: 1
+        }}
+        onChangeText={newContent => setNewContent(newContent)}
+        value={newContent}
+      ></Input>
+      <Input
+        placeholder={location}
+        label="Location"
+        style={{
+          width: 200,
+          borderColor: "gray",
+          borderWidth: 1
+        }}
+        onChangeText={newLocation => setNewLocation(newLocation)}
+        value={newLocation}
+      ></Input>
+      <Input
+        placeholder="Time"
+        label="Time"
+        style={{
+          width: 200,
+          borderColor: "gray",
+          borderWidth: 1
+        }}
+        onChangeText={newTime => setNewTime(newTime)}
+        value={newTime}
+      ></Input>
       <Button
-        title="Go to Edit Party... again"
-        type="clear"
-        onPress={() => {navigate.push("Edit")}}
-      />
-      <Button
-        title="Go to Home"
-        type="clear"
-        onPress={() => {navigate("Home")}}
-      />
-      <Button
-        title="Go back"
-        type="clear"
-        onPress={() => {navigation.goBack()}}
-      />
+        buttonStyle={{ marginTop: 10 }}
+        title="Update"
+        onPress={() => updateParty()}
+      ></Button>
+      <Button title="Go Home" onPress={() => navigate("HomeScreen")}/>
     </View>
   );
 }

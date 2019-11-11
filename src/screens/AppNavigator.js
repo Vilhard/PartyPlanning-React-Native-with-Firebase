@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
@@ -6,6 +6,7 @@ import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
 import AddParty from "./AddParty";
 import EditParty from "./EditParty";
+
 
 const AppNavigator = createStackNavigator(
   {
@@ -44,10 +45,10 @@ const AppNavigator = createStackNavigator(
         shadowOpacity: 0 // remove shadow on iOS
       },
       headerTitleStyle: {
-        fontSize: 20
+        fontSize: 20,
       }
     },
     initialRouteName: "HomeScreen"
-  }
+  },
 );
 export default createAppContainer(AppNavigator);
