@@ -67,6 +67,7 @@ export default function HomeScreen() {
         <ScrollView>
           <View style={HomeStyles.itemsList}>
             {partyList.map((item, index) => {
+              console.log(key[0])
               return (
                 <View key={index} style={HomeStyles.box}>
                     <Text  style={HomeStyles.itemHeader}>{item.name}</Text>
@@ -80,7 +81,7 @@ export default function HomeScreen() {
                       type="font-awesome"
                       color="#f50"
                       onPress={() => {
-                        navigate("EditParty", { index:key[index],
+                        navigate("EditParty", { key: key[index],
                           name: item.name, content:item.content, location:item.location, time: item.time
                         });
                       }}
@@ -90,7 +91,7 @@ export default function HomeScreen() {
                       name="trash"
                       type="font-awesome"
                       color="#f50"
-                      onPress={() => deleteData(index)}
+                      onPress={() => deleteData(key)}
                     />
                   </View>
                 </View>

@@ -6,22 +6,21 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 
 export default function EditParty() {
   const { navigate } = useNavigation();
- const name = useNavigationParam("name");
- const location = useNavigationParam("location");
- const content = useNavigationParam("content");
- const time = useNavigationParam("time");
- const index = useNavigationParam("index")
-
- const [newName, setNewName] = useState(name);
- const [newLocation, setNewLocation] = useState(location);
- const [newContent, setNewContent] = useState(content);
- const [newTime, setNewTime] = useState(time);
-  // Need to update the party by index... not working atm
- const updateParty = () => {
+  const name = useNavigationParam("name");
+  const location = useNavigationParam("location");
+  const content = useNavigationParam("content");
+  const time = useNavigationParam("time");
+  const key = useNavigationParam("key")
+  const [newName, setNewName] = useState(name);
+  const [newLocation, setNewLocation] = useState(location);
+  const [newContent, setNewContent] = useState(content);
+  const [newTime, setNewTime] = useState(time);
+  
+ const updateParty = (key) => {
   firebase
   .database()
-  .ref("party/" + index)
-  .push({ name: newName, content: newContent, location: newLocation, time: newTime })
+  .ref("party/" + key)
+  .set({ name: newName, content: newContent, location: newLocation, time: newTime })
   .then(() => navigate("HomeScreen"))
  }
   return (
@@ -69,39 +68,8 @@ export default function EditParty() {
       <Button
         buttonStyle={{ marginTop: 10 }}
         title="Update"
-        onPress={() => updateParty()}
+        onPress={() => updateParty(key)}
       ></Button>
-      <Button title="Go Home" onPress={() => navigate("HomeScreen")}/>
     </View>
   );
 }
-
-
- /*export default class EditParty extends Component {
-
-  static navigationOptions = {
-    title: "Edit Party"
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Add Board</Text>
-        <Button
-          title="Go to Edit Party... again"
-          type="clear"
-          onPress={() => this.props.navigation.push("Edit")}
-        />
-        <Button
-          title="Go to Home"
-          type="clear"
-          onPress={() => this.props.navigation.navigate("Home")}
-        />
-        <Button
-          title="Go back"
-          type="clear"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-} */
