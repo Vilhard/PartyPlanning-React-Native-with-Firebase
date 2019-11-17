@@ -5,23 +5,21 @@ import { Button } from "react-native-elements";
 import { HomeStyles } from "../styles/HomeStyles";
 import * as firebase from "firebase";
 
-export default function LoginScreen() {
+export default function SignUp() {
   const { navigate } = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
   handleSignUp = () => {
-    firebase
-     .auth()
-     .signInWithEmailAndPassword(email, password)
-     .then(() => navigate('HomeScreen'))
-     .catch(errorMessage => setErrorMessage(errorMessage))
- }
-  
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(() => navigate("HomeScreen"))
+    .catch(errorMessage => setErrorMessage(errorMessage)
+    )
+  }
     return (
       <View style={HomeStyles.container}>
-          <Text style={{color:'#e93766', fontSize: 40}}>Login</Text>
+          <Text style={{color:'#e93766', fontSize: 40}}>Sign Up</Text>
           {errorMessage &&
           <Text style={{ color: 'red' }}>
             {errorMessage}
@@ -41,10 +39,10 @@ export default function LoginScreen() {
           onChangeText={password => setPassword(password)}
           value={password}
         />
-        <Button title="Login"type="clear" color="#e93766" onPress={() => handleSignUp()}/>
+        <Button title="Sign Up"  type="clear" color="#e93766" onPress={() => handleSignUp()}/>
         <View>
-        <Text> Don't have an account? <Text onPress={() => navigate('SignUp')} style={{color:'#e93766', fontSize: 18}}> Sign Up </Text></Text>
-        </View>
+        <Text> Already have an account? <Text onPress={() => navigate('LoginScreen')} style={{color:'#e93766', fontSize: 18}}> Sign Up </Text></Text>
+        </View>      
       </View>
-   );
+    );
 }

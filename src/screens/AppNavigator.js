@@ -6,6 +6,7 @@ import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
 import AddParty from "./AddParty";
 import EditParty from "./EditParty";
+import SignUp from "./SignUp";
 
 
 const AppNavigator = createStackNavigator(
@@ -32,6 +33,12 @@ const AppNavigator = createStackNavigator(
       screen: EditParty,
       navigationOptions: {
         title: "Edit Party"
+      }
+    },
+    SignUp: {
+      screen: SignUp, 
+      navigationOptions: {
+        title: "Sign Up"
       }
     }
   },

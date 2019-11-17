@@ -16,18 +16,15 @@ export default function HomeScreen() {
   const { navigate } = useNavigation();
   const [partyList, setPartyList] = useState([]);
   const [key, setKey] = useState([]);
-
-  /*Not working!
-  HomeScreen.navigationOptions = () => ({
-    title: useNavigationParam('title', /* your default title )
-  }); 
-  */
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     Font.loadAsync({
       'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
       'Montserrat-Bold': require('../../assets/fonts/Montserrat-SemiBold.ttf'),
     });
+    const { currentUser } = firebase.auth()
+    setCurrentUser({currentUser})
     firebase
       .database()
       .ref("party/")
