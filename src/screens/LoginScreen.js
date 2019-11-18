@@ -19,13 +19,10 @@ export default function LoginScreen() {
      .catch(errorMessage => setErrorMessage(errorMessage))
  }
   
+    console.log(errorMessage)
     return (
       <View style={HomeStyles.container}>
           <Text style={{color:'#e93766', fontSize: 40}}>Login</Text>
-          {errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {errorMessage}
-          </Text>}
           <TextInput
           style={HomeStyles.textInput}
           autoCapitalize="none"

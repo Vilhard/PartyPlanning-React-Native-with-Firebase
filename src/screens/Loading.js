@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { Text, View, ActivityIndicator} from "react-native";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
-import firebase from 'react-native-firebase';
+import { HomeStyles } from "../styles/HomeStyles";
+import * as firebase from "firebase";
 
 export default function Loading() {
-    const { navigate } = useNavigation();
+  const { navigate } = useNavigation();
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       navigate(user ? 'HomeScreen' : 'SignUp')
@@ -17,3 +18,4 @@ export default function Loading() {
       </View>
     )
 }
+

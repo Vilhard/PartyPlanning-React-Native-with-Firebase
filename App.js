@@ -7,8 +7,3 @@ export default class App extends React.Component {
     return <AppNavigator />;
   }
 }
-
-YellowBox.ignoreWarnings([
-  "Warning: isMounted(...) is deprecated",
-  "Module RCTImageLoader"
-]);

@@ -38,6 +38,12 @@ export default function HomeScreen() {
       });
   }, []);
 
+  // Sign out 
+  /*handleSignout = () => {
+    Firebase.auth().signOut()
+    this.props.navigation.navigate('Login')
+} */
+
   const deleteData = (index) => {
     firebase.database().ref("party/"+ key[index]).remove();
   };
@@ -96,13 +102,6 @@ export default function HomeScreen() {
             })}
           </View>
         </ScrollView>
-        <Button
-          title="Go to LoginScreen"
-          type="clear"
-          onPress={() => {
-            navigate("LoginScreen");
-          }}
-        />
       </View>
     </View>
   );

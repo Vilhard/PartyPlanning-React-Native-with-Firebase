@@ -14,16 +14,14 @@ export default function SignUp() {
   handleSignUp = () => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then(() => navigate("HomeScreen"))
+    .then(console.log(email,password))
     .catch(errorMessage => setErrorMessage(errorMessage)
     )
   }
+  console.log(errorMessage)
     return (
       <View style={HomeStyles.container}>
           <Text style={{color:'#e93766', fontSize: 40}}>Sign Up</Text>
-          {errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {errorMessage}
-          </Text>}
           <TextInput
           style={HomeStyles.textInput}
           autoCapitalize="none"
@@ -41,7 +39,7 @@ export default function SignUp() {
         />
         <Button title="Sign Up"  type="clear" color="#e93766" onPress={() => handleSignUp()}/>
         <View>
-        <Text> Already have an account? <Text onPress={() => navigate('LoginScreen')} style={{color:'#e93766', fontSize: 18}}> Sign Up </Text></Text>
+        <Text> Already have an account? <Text onPress={() => navigate('LoginScreen')} style={{color:'#e93766', fontSize: 18}}> Login </Text></Text>
         </View>      
       </View>
     );

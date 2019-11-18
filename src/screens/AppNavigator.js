@@ -2,15 +2,21 @@ import React, {useState, useEffect } from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
+import Loading from "./Loading"
 import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
 import AddParty from "./AddParty";
 import EditParty from "./EditParty";
 import SignUp from "./SignUp";
 
-
 const AppNavigator = createStackNavigator(
   {
+    Loading: {
+    screen: Loading,
+    navigationOptions: {
+      header: null
+    }
+  },
     LoginScreen: {
       screen: LoginScreen,
       navigationOptions: {
@@ -21,6 +27,7 @@ const AppNavigator = createStackNavigator(
       screen: HomeScreen,
       navigationOptions: {
         title: "My Parties",
+        //headerLeft: null
       }
     },
     AddParty: {
@@ -55,7 +62,7 @@ const AppNavigator = createStackNavigator(
         fontSize: 20,
       }
     },
-    initialRouteName: "HomeScreen"
+    initialRouteName: "Loading"
   },
 );
 export default createAppContainer(AppNavigator);
