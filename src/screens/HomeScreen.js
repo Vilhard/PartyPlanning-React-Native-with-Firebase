@@ -27,7 +27,6 @@ export default function HomeScreen() {
       'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
       'Montserrat-Bold': require('../../assets/fonts/Montserrat-SemiBold.ttf'),
     });
-
     firebase
       .database()
       .ref("/users/" + currentUser + "/party/")
