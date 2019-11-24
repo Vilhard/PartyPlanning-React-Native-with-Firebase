@@ -13,6 +13,7 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
 import * as Font from 'expo-font';
 import { HomeStyles } from "../styles/HomeStyles";
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const { navigate } = useNavigation();
@@ -41,13 +42,20 @@ export default function HomeScreen() {
   }, []);
  
   console.log(currentUser)
+  
   // Sign out 
-  handleSignout = () => {
-    firebase.auth().signOut()
+  handleSignout = async () => {
+    try {
+      firebase.auth().signOut()
+      navigate("LoginScreen")
+    } catch (e) {
+      console.log(e)
+    }
+    
   } 
 
   const deleteData = (index) => {
-    firebase.database().ref("party/"+ key[index]).remove();
+    firebase.database().ref("/users/" + currentUser + "/party/" + key[index]).remove();
   };
 
   return (
@@ -60,7 +68,17 @@ export default function HomeScreen() {
         marginTop: 20
       }}
     >
-      <Button title="Sign out" onPress={() => handleSignout()} />
+      <LinearGradient
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          style={{ padding: 15, alignItems: 'center', borderRadius: 5 }}>
+      <TouchableOpacity onPress={() => handleSignout()}>
+        <Text style={{
+              backgroundColor: 'transparent',
+              fontSize: 15,
+              color: '#fff',
+            }}> Sign out</Text>
+        </TouchableOpacity>
+      </LinearGradient>
       <Text style={{fontSize: 18}}>
           Hi {showUser && showUser.email}!
         </Text>
