@@ -19,7 +19,8 @@ export default function HomeScreen() {
   const [partyList, setPartyList] = useState([]);
   const [key, setKey] = useState([]);
   const currentUser  = firebase.auth().currentUser.uid
-
+  const showUser = firebase.auth().currentUser
+  
 
   useEffect(() => {
     Font.loadAsync({
@@ -40,7 +41,7 @@ export default function HomeScreen() {
       });
   }, []);
  
-  console.log(partyList)
+  console.log(currentUser)
   // Sign out 
   handleSignout = () => {
     firebase.auth().signOut()
@@ -62,7 +63,7 @@ export default function HomeScreen() {
     >
       <Button title="Sign out" onPress={() => handleSignout()} />
       <Text style={{fontSize: 18}}>
-          Hi {currentUser && currentUser.email}!
+          Hi {showUser && showUser.email}!
         </Text>
       <Icon
         raised
