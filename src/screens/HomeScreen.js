@@ -1,12 +1,14 @@
 import React, {useState, useEffect } from "react";
+import { AppLoading } from 'expo';
 import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import { Button, Icon } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
 import * as Font from 'expo-font';
@@ -15,16 +17,17 @@ import { HomeStyles } from "../styles/HomeStyles";
 export default function HomeScreen() {
   const { navigate } = useNavigation();
   const [partyList, setPartyList] = useState([]);
+  const [fontLoaded, setFontLoaded] = useState(false);
   const [key, setKey] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const currentUser  = firebase.auth().currentUser
+
 
   useEffect(() => {
     Font.loadAsync({
       'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
       'Montserrat-Bold': require('../../assets/fonts/Montserrat-SemiBold.ttf'),
     });
-    const { currentUser } = firebase.auth()
-    setCurrentUser({currentUser})
+
     firebase
       .database()
       .ref("party/")
@@ -38,11 +41,11 @@ export default function HomeScreen() {
       });
   }, []);
 
+ console.log(currentUser);
   // Sign out 
-  /*handleSignout = () => {
-    Firebase.auth().signOut()
-    this.props.navigation.navigate('Login')
-} */
+  handleSignout = () => {
+    firebase.auth().signOut()
+  } 
 
   const deleteData = (index) => {
     firebase.database().ref("party/"+ key[index]).remove();
@@ -51,12 +54,17 @@ export default function HomeScreen() {
   return (
     <View
       style={{
+        backgroundColor: "#FFF",
         flex: 2,
         alignItems: "center",
         justifyContent: "center",
         marginTop: 20
       }}
     >
+      <Button title="Sign out" onPress={() => handleSignout()} />
+      <Text style={{fontSize: 18}}>
+          Hi {currentUser && currentUser.email}!
+        </Text>
       <Icon
         raised
         name="plus"
@@ -94,7 +102,7 @@ export default function HomeScreen() {
                       name="trash"
                       type="font-awesome"
                       color="#f50"
-                      onPress={() => deleteData(key)}
+                      onPress={() => deleteData(index)}
                     />
                   </View>
                 </View>

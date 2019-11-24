@@ -27,7 +27,7 @@ const AppNavigator = createStackNavigator(
       screen: HomeScreen,
       navigationOptions: {
         title: "My Parties",
-        //headerLeft: null
+        headerLeft: null
       }
     },
     AddParty: {
@@ -51,15 +51,15 @@ const AppNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTintColor: '#000',
+      headerTintColor: '#FFF',
       headerStyle: {
         fontWeight: 'bold',
-        backgroundColor: "#fff",
+        backgroundColor: "#1BECF7",
         elevation: 0, // remove shadow on Android
-        shadowOpacity: 0 // remove shadow on iOS
+        shadowOpacity: 0, // remove shadow on iOS
       },
       headerTitleStyle: {
-        fontSize: 20,
+        fontSize: 30,
       }
     },
     initialRouteName: "Loading"

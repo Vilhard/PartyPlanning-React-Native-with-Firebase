@@ -13,8 +13,14 @@ export default function SignUp() {
 
   handleSignUp = () => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((response) => {
+      firebase.auth().currentUser.updateProfile({
+        displayName : email,
+      }).then(() => {
+        firebase.database().ref("users/" + firebase.auth().currentUser.uid).set(firebase.auth().currentUser)
+      })
+    })
     .then(() => navigate("HomeScreen"))
-    .then(console.log(email,password))
     .catch(errorMessage => setErrorMessage(errorMessage)
     )
   }
@@ -22,6 +28,8 @@ export default function SignUp() {
     return (
       <View style={HomeStyles.container}>
           <Text style={{color:'#e93766', fontSize: 40}}>Sign Up</Text>
+    {errorMessage && <Text style={{color: `red`}}>Some error ocurred </Text>
+          }
           <TextInput
           style={HomeStyles.textInput}
           autoCapitalize="none"

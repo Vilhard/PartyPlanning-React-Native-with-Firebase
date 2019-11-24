@@ -6,9 +6,16 @@ import * as firebase from "firebase";
 
 export default function Loading() {
   const { navigate } = useNavigation();
+  const [loggedIn, setLoggedIn] = useState(null);
+  
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      navigate(user ? 'HomeScreen' : 'SignUp')
+      if (user) {
+        setLoggedIn(true)
+      } else {
+        setLoggedIn(false)
+      }
+      navigate(user ? 'HomeScreen' : 'LoginScreen')
     })
 });
     return (

@@ -17,9 +17,7 @@ export const HomeStyles = StyleSheet.create({
   ContentBox: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#FFFAF3",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    backgroundColor: "#FFFFFF",
     width: "100%",
     elevation: 5
   },
@@ -33,7 +31,6 @@ export const HomeStyles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Montserrat-Light",
     color: "white"
-    
   },
   itemContent: {
     fontSize: 14,
@@ -56,11 +53,10 @@ export const HomeStyles = StyleSheet.create({
   box: {
     width: "80%",
     backgroundColor: "#FF7051",
-    borderRadius: 25,
     borderWidth: 1,
     borderColor: "#ddd",
     borderBottomWidth: 0,
-    shadowColor: "#000",
+    shadowColor: "#fff",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -69,5 +65,19 @@ export const HomeStyles = StyleSheet.create({
     marginRight: 5,
     marginTop: 20,
     paddingBottom: 30
+  },
+  signOut: {
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
   }
 });
