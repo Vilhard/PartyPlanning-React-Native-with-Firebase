@@ -15,11 +15,12 @@ export default function EditParty() {
   const [newLocation, setNewLocation] = useState(location);
   const [newContent, setNewContent] = useState(content);
   const [newTime, setNewTime] = useState(time);
+  const currentUser  = firebase.auth().currentUser.uid
   
  const updateParty = (key) => {
   firebase
   .database()
-  .ref("party/" + key)
+  .ref("/users/" + currentUser + "/party/" + key)
   .set({ name: newName, content: newContent, location: newLocation, time: newTime })
   .then(() => navigate("HomeScreen"))
  }

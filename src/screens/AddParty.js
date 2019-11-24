@@ -11,11 +11,12 @@ export default function Party() {
   const [content, setContent] = useState("");
   const [location, setLocation] = useState("");
   const [time, setTime] = useState("");
+  const currentUser  = firebase.auth().currentUser.uid
 
   const saveItem = () => {
     firebase
       .database()
-      .ref("party/")
+      .ref("/users/" + currentUser + "/party/")
       .push({ name: name, content: content, location: location, time: time })
       .then(() => navigate("HomeScreen"))
       .then((data) => {

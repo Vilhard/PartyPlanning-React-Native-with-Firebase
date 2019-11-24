@@ -51,10 +51,10 @@ const AppNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTintColor: '#FFF',
+      headerTintColor: '#000',
       headerStyle: {
         fontWeight: 'bold',
-        backgroundColor: "#1BECF7",
+        backgroundColor: "#FFF",
         elevation: 0, // remove shadow on Android
         shadowOpacity: 0, // remove shadow on iOS
       },

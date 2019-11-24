@@ -17,9 +17,8 @@ import { HomeStyles } from "../styles/HomeStyles";
 export default function HomeScreen() {
   const { navigate } = useNavigation();
   const [partyList, setPartyList] = useState([]);
-  const [fontLoaded, setFontLoaded] = useState(false);
   const [key, setKey] = useState([]);
-  const currentUser  = firebase.auth().currentUser
+  const currentUser  = firebase.auth().currentUser.uid
 
 
   useEffect(() => {
@@ -30,18 +29,18 @@ export default function HomeScreen() {
 
     firebase
       .database()
-      .ref("party/")
+      .ref("/users/" + currentUser + "/party/")
       .on("value", snapshot => {
         const data = snapshot.val();
         const prods = Object.values(data);
         const key = Object.keys(data);
+        console.log(data)
         setPartyList(prods);
         setKey(key);
-        console.log(key)
       });
   }, []);
-
- console.log(currentUser);
+ 
+  console.log(partyList)
   // Sign out 
   handleSignout = () => {
     firebase.auth().signOut()
