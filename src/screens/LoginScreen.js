@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import React, { useState } from "react";
+import { Text, View, TextInput, Alert, TouchableOpacity } from "react-native";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
-import { Button } from "react-native-elements";
 import { HomeStyles } from "../styles/HomeStyles";
 import * as firebase from "firebase";
 
@@ -9,42 +8,48 @@ export default function LoginScreen() {
   const { navigate } = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   handleSignUp = () => {
+    try {
     firebase
      .auth()
      .signInWithEmailAndPassword(email, password)
      .then(() => navigate('HomeScreen'))
-     .catch(errorMessage => setErrorMessage(errorMessage))
+     .catch(error => { 
+      setError(Alert.alert(error.message));
+     })
+    }catch(err){
+      Alert.alert(err)
+    }
  }
   
-    console.log(errorMessage)
+    console.log(error)
     return (
       <View style={HomeStyles.container}>
-          <Text style={{color:'#e93766', fontSize: 40}}>Login</Text>
-          {errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {errorMessage}
-          </Text>}
+          <Text style={{color:'#FFF', fontSize: 40}}>Login</Text>
           <TextInput
           style={HomeStyles.textInput}
           autoCapitalize="none"
           placeholder="Email"
+          placeholderTextColor="#DCDEDD"
           onChangeText={email => setEmail(email)}
           value={email}
         />
         <TextInput
           secureTextEntry
           placeholder="Password"
+          placeholderTextColor="#DCDEDD"
           autoCapitalize="none"
           style={HomeStyles.textInput}
           onChangeText={password => setPassword(password)}
           value={password}
         />
-        <Button title="Login"type="clear" color="#e93766" onPress={() => handleSignUp()}/>
-        <View>
-        <Text> Don't have an account? <Text onPress={() => navigate('SignUp')} style={{color:'#e93766', fontSize: 18}}> Sign Up </Text></Text>
+        <TouchableOpacity style={HomeStyles.buttonStyle} onPress={() => handleSignUp()}>
+        <Text style={{color:'#FFF', textAlign: 'center', fontSize: 20}}>LOGIN</Text>
+        </TouchableOpacity>
+        <View style={{paddingTop: 10}}>
+        <Text style={{color:'#DCDEDD'}}> Don't have an account? <Text onPress={() => navigate('SignUp')} style={{color:'#BCD8C1', fontSize: 20}}> Sign Up </Text></Text>
         </View>
       </View>
    );

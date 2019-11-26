@@ -2,6 +2,9 @@ import React, {useState, useEffect } from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
+import {
+  Button
+} from "react-native";
 import Loading from "./Loading"
 import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";
@@ -26,8 +29,8 @@ const AppNavigator = createStackNavigator(
     HomeScreen: {
       screen: HomeScreen,
       navigationOptions: {
-        title: "My Parties",
-        headerLeft: null
+        title: "PartyPlanner",
+        headerLeft: null,
       }
     },
     AddParty: {
@@ -45,16 +48,16 @@ const AppNavigator = createStackNavigator(
     SignUp: {
       screen: SignUp, 
       navigationOptions: {
-        title: "Sign Up"
+        title: "",
       }
     }
   },
   {
     defaultNavigationOptions: {
-      headerTintColor: '#000',
+      headerTintColor: '#FFF',
       headerStyle: {
         fontWeight: 'bold',
-        backgroundColor: "#FFF",
+        backgroundColor: "#222E50",
         elevation: 0, // remove shadow on Android
         shadowOpacity: 0, // remove shadow on iOS
       },

@@ -12,6 +12,7 @@ export default function Loading() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         setLoggedIn(true)
+        console.log('user is logged');
       } else {
         setLoggedIn(false)
       }
@@ -20,8 +21,8 @@ export default function Loading() {
 });
     return (
       <View style={HomeStyles.container}>
-        <Text style={{color:'#e93766', fontSize: 40}}>Loading</Text>
-        <ActivityIndicator color='#e93766' size="large" />
+        <Text style={{color:'#43B8E5', fontSize: 40}}>Loading</Text>
+        <ActivityIndicator color='#43B8E5' size="large" />
       </View>
     )
 }

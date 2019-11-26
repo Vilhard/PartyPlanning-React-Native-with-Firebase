@@ -18,11 +18,15 @@ export default function EditParty() {
   const currentUser  = firebase.auth().currentUser.uid
   
  const updateParty = (key) => {
+   try{
   firebase
   .database()
   .ref("/users/" + currentUser + "/party/" + key)
   .set({ name: newName, content: newContent, location: newLocation, time: newTime })
   .then(() => navigate("HomeScreen"))
+   }catch(err){
+     console.log(err)
+   }
  }
   return (
     <View style={{ padding: 20 }}>

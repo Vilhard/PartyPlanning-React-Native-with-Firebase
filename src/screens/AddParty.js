@@ -14,7 +14,8 @@ export default function Party() {
   const currentUser  = firebase.auth().currentUser.uid
 
   const saveItem = () => {
-    firebase
+    try{
+      firebase
       .database()
       .ref("/users/" + currentUser + "/party/")
       .push({ name: name, content: content, location: location, time: time })
@@ -24,11 +25,15 @@ export default function Party() {
       })
       .catch((error) => {
         console.log("error ", error);
-      });
+      })
+    }catch(err){
+      console.log(err)
+    }
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{flex:2, backgroundColor: "#007284" }}>
+    <View style={{ flex:3, padding: 20, backgroundColor: "##0B52B6" }}>
       <Input
         placeholder="Name of the party"
         label="Name"
@@ -51,6 +56,7 @@ export default function Party() {
         placeholder="Location"
         label="Location"
         style={{
+          color:'white',
           width: 200,
           borderColor: "gray",
           borderWidth: 1
@@ -75,5 +81,6 @@ export default function Party() {
         onPress={saveItem}
       ></Button>
     </View>
+  </View>
   );
 }

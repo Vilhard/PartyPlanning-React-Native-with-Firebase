@@ -1,9 +1,6 @@
 import React, {useState, useEffect } from "react";
-import { AppLoading } from 'expo';
 import {
-  StyleSheet,
   ScrollView,
-  ActivityIndicator,
   View,
   Text,
   TouchableOpacity
@@ -32,26 +29,31 @@ export default function HomeScreen() {
       .database()
       .ref("/users/" + currentUser + "/party/")
       .on("value", snapshot => {
-        const data = snapshot.val();
-        const prods = Object.values(data);
-        const key = Object.keys(data);
-        console.log(data)
-        setPartyList(prods);
-        setKey(key);
+        // Checks if there's data in database and clears list
+        if (!snapshot.exists()) {
+          console.log("data not found")
+          const empty = 0
+          const prods = Object.values(empty);
+          setPartyList(prods);
+        }else {
+          const data = snapshot.val();
+          const prods = Object.values(data);
+          const key = Object.keys(data);
+          console.log(data)
+          setPartyList(prods);
+          setKey(key);
+        }
       });
   }, []);
- 
-  console.log(currentUser)
-  
-  // Sign out 
-  handleSignout = async () => {
+
+  handleSignout = () => {
     try {
       firebase.auth().signOut()
+      window.location.reload();
       navigate("LoginScreen")
     } catch (e) {
       console.log(e)
     }
-    
   } 
 
   const deleteData = (index) => {
@@ -60,37 +62,16 @@ export default function HomeScreen() {
 
   return (
     <View
-      style={{
-        backgroundColor: "#FFF",
-        flex: 2,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 20
-      }}
+      style={HomeStyles.main}
     >
-      <LinearGradient
-          colors={['#4c669f', '#3b5998', '#192f6a']}
-          style={{ padding: 15, alignItems: 'center', borderRadius: 5 }}>
-      <TouchableOpacity onPress={() => handleSignout()}>
-        <Text style={{
-              backgroundColor: 'transparent',
-              fontSize: 15,
-              color: '#fff',
-            }}> Sign out</Text>
-        </TouchableOpacity>
-      </LinearGradient>
-      <Text style={{fontSize: 18}}>
+      <View style={HomeStyles.sideBySide}>
+        <View style={HomeStyles.padding}>
+        <Text style={{color: "white", fontSize: 18}}>
           Hi {showUser && showUser.email}!
-        </Text>
-      <Icon
-        raised
-        name="plus"
-        type="font-awesome"
-        color="#f50"
-        onPress={() => {
-          navigate("AddParty");
-        }}
-      />
+          </Text>
+          </View>
+          <Icon name="sign-out" type='font-awesome' color="#FFF" size={30} onPress={() => handleSignout()}/>
+          </View>
       <View style={HomeStyles.ContentBox}>
         <ScrollView>
           <View style={HomeStyles.itemsList}>
@@ -107,6 +88,7 @@ export default function HomeScreen() {
                       raised
                       name="edit"
                       type="font-awesome"
+                      size={20}
                       color="#f50"
                       onPress={() => {
                         navigate("EditParty", { key: key[index],
@@ -118,6 +100,7 @@ export default function HomeScreen() {
                       raised
                       name="trash"
                       type="font-awesome"
+                      size={20}
                       color="#f50"
                       onPress={() => deleteData(index)}
                     />
@@ -127,7 +110,10 @@ export default function HomeScreen() {
             })}
           </View>
         </ScrollView>
+        <TouchableOpacity style={HomeStyles.add}>
+          <Icon name="plus" type='font-awesome' size={20} color="#FFF" onPress={() => navigate("AddParty")} />
+          </TouchableOpacity>
       </View>
-    </View>
+      </View>
   );
 }
