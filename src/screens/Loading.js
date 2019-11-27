@@ -6,19 +6,26 @@ import * as firebase from "firebase";
 
 export default function Loading() {
   const { navigate } = useNavigation();
-  const [loggedIn, setLoggedIn] = useState(null);
   
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        setLoggedIn(true)
-        console.log('user is logged');
-      } else {
-        setLoggedIn(false)
+    async function authSession() {
+      try {
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            console.log('user is logged');
+            navigate("HomeScreen")
+            console.log(user)
+          } else {
+            navigate("LoginScreen")
+          }
+        })
+      } catch(e) {
+        console.log(e)
       }
-      navigate(user ? 'HomeScreen' : 'LoginScreen')
-    })
-});
+    }
+    authSession();
+}, []);
+
     return (
       <View style={HomeStyles.container}>
         <Text style={{color:'#43B8E5', fontSize: 40}}>Loading</Text>

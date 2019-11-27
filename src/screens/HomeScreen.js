@@ -10,7 +10,6 @@ import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
 import * as Font from 'expo-font';
 import { HomeStyles } from "../styles/HomeStyles";
-import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const { navigate } = useNavigation();
@@ -18,8 +17,8 @@ export default function HomeScreen() {
   const [key, setKey] = useState([]);
   const currentUser  = firebase.auth().currentUser.uid
   const showUser = firebase.auth().currentUser
+
   
-// This is image branch
   useEffect(() => {
     Font.loadAsync({
       'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
@@ -29,7 +28,6 @@ export default function HomeScreen() {
       .database()
       .ref("/users/" + currentUser + "/party/")
       .on("value", snapshot => {
-        // Checks if there's data in database and clears list
         if (!snapshot.exists()) {
           console.log("data not found")
           const empty = 0
@@ -111,7 +109,7 @@ export default function HomeScreen() {
           </View>
         </ScrollView>
         <TouchableOpacity style={HomeStyles.add}>
-          <Icon name="plus" type='font-awesome' size={20} color="#FFF" onPress={() => navigate("AddParty")} />
+          <Icon name="plus" type='font-awesome' size={30} color="#FFF" onPress={() => navigate("AddParty")} />
           </TouchableOpacity>
       </View>
       </View>

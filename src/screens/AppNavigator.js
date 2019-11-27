@@ -1,10 +1,5 @@
-import React, {useState, useEffect } from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-
-import {
-  Button
-} from "react-native";
 import Loading from "./Loading"
 import LoginScreen from "./LoginScreen";
 import HomeScreen from "./HomeScreen";

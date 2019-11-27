@@ -79,6 +79,7 @@ export const HomeStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#45C1EE",
     borderBottomWidth: 0,
+    borderRadius: 10,
     shadowColor: "#C9CFCC",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
