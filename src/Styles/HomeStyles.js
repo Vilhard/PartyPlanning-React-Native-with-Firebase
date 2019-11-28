@@ -18,13 +18,21 @@ export const HomeStyles = StyleSheet.create({
   },
   padding: {
     alignItems: "center",
-    paddingRight: 20
+    paddingRight: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 40
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#222E50',
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "white",
+    textAlign: "center"
   },
   textInput: {
     height: 40,
@@ -73,6 +81,13 @@ export const HomeStyles = StyleSheet.create({
     borderRadius: 15,
     marginTop: 10
   },
+  addEditView: {
+    flex:1, 
+    backgroundColor: "#E5E5E5" 
+  }, 
+  AEcontainer: {
+    padding: 20, 
+  },
   box: {
     width: "80%",
     backgroundColor: "#45C1EE",
@@ -106,11 +121,13 @@ export const HomeStyles = StyleSheet.create({
     marginTop: 10,
   }, 
   buttonStyle: {
-    padding:10,
-	  backgroundColor: '#43B8E5',
+    padding: 5,
+    marginTop: 10,
+    borderWidth:1,
+    borderColor:'rgba(0,0,0,0.2)',
+    backgroundColor: '#497A99',
     borderRadius:5,
     width:"60%"
-    
   },
   add: {
     borderWidth:1,
@@ -124,5 +141,12 @@ export const HomeStyles = StyleSheet.create({
     height:60,
     backgroundColor:'#0B52B6',
     borderRadius:100,
+  },
+  img: {
+    borderRadius: 10,
+    width: 100,
+    height: 100,
+    justifyContent: "center",
+    marginTop: 10
   }
 });

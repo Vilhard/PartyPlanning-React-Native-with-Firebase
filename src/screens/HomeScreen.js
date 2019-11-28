@@ -3,13 +3,17 @@ import {
   ScrollView,
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Image,
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
 import * as Font from 'expo-font';
 import { HomeStyles } from "../styles/HomeStyles";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function HomeScreen() {
   const { navigate } = useNavigation();
@@ -17,8 +21,8 @@ export default function HomeScreen() {
   const [key, setKey] = useState([]);
   const currentUser  = firebase.auth().currentUser.uid
   const showUser = firebase.auth().currentUser
+  const [ photo, setPhoto ] = useState(null)
 
-  
   useEffect(() => {
     Font.loadAsync({
       'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
@@ -42,21 +46,51 @@ export default function HomeScreen() {
           setKey(key);
         }
       });
+      getImage();
   }, []);
 
   handleSignout = () => {
     try {
       firebase.auth().signOut()
-      window.location.reload();
       navigate("LoginScreen")
     } catch (e) {
       console.log(e)
     }
   } 
 
-  const deleteData = (index) => {
-    firebase.database().ref("/users/" + currentUser + "/party/" + key[index]).remove();
-  };
+  getImage = () => {
+    const images = firebase.storage().ref().child('images/');
+    const image = images.child('test-image');
+    image.getDownloadURL().then((url) => {setPhoto(url)})
+  }
+
+  onChooseImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync();
+    if (!result.cancelled) {
+      uploadImage(result.uri, "test-image")
+      .then(() => {
+          Alert.alert("Success");
+          getImage();
+      })
+      .catch((e) => {
+        Alert.alert(e);
+      })
+    }
+  }
+  
+  uploadImage = async (uri, imageName) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    var ref = firebase.storage().ref("images/" + imageName);
+    return ref.put(blob)
+    .then(() => {
+      return ref.getDownloadURL();
+    })
+  }
+  
+  deleteData = (index) => {
+      firebase.database().ref("/users/" + currentUser + "/party/" + key[index]).remove()
+    }
 
   return (
     <View
@@ -67,8 +101,20 @@ export default function HomeScreen() {
         <Text style={{color: "white", fontSize: 18}}>
           Hi {showUser && showUser.email}!
           </Text>
+          <Image style={HomeStyles.img} source={{uri: photo}}/>
+          <TouchableOpacity style={HomeStyles.buttonStyle} onPress={() => onChooseImage()}>
+            <Text style={HomeStyles.buttonText}>Display Image</Text>
+          </TouchableOpacity>
           </View>
-          <Icon name="sign-out" type='font-awesome' color="#FFF" size={30} onPress={() => handleSignout()}/>
+          <Icon name="sign-out" type='font-awesome' color="#FFF" size={30} onPress={() => Alert.alert(
+                        "Logout",
+                        "Are you sure you wanna logout?",
+                        [
+                          {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
+                          {text: 'Yes', onPress: () => handleSignout()},
+                        ],
+                        { cancelable: false }
+                      )}/>
           </View>
       <View style={HomeStyles.ContentBox}>
         <ScrollView>
@@ -100,7 +146,25 @@ export default function HomeScreen() {
                       type="font-awesome"
                       size={20}
                       color="#f50"
-                      onPress={() => deleteData(index)}
+                      onPress={() => Alert.alert(
+                        "Delete",
+                        "Are you sure you wanna delete this Party?",
+                        [
+                          {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
+                          {text: 'Yes', onPress: () => deleteData(index)},
+                        ],
+                        { cancelable: false }
+                      )}
+                    />
+                    <Icon
+                      raised
+                      name="info-circle"
+                      type="font-awesome"
+                      size={20}
+                      color="#f50"
+                      onPress={() => {
+                        navigate("PartyInfo");
+                      }}
                     />
                   </View>
                 </View>
@@ -109,7 +173,7 @@ export default function HomeScreen() {
           </View>
         </ScrollView>
         <TouchableOpacity style={HomeStyles.add}>
-          <Icon name="plus" type='font-awesome' size={30} color="#FFF" onPress={() => navigate("AddParty")} />
+          <Icon name="plus" type='font-awesome' size={40} color="#FFF" onPress={() => navigate("AddParty")} />
           </TouchableOpacity>
       </View>
       </View>

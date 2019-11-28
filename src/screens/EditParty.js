@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { View, Alert } from "react-native";
 import firebase from "../../config/Firebase";
 import { Input, Button } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+import { HomeStyles } from "../styles/HomeStyles";
 
 export default function EditParty() {
   const { navigate } = useNavigation();
@@ -18,18 +19,22 @@ export default function EditParty() {
   const currentUser  = firebase.auth().currentUser.uid
   
  const updateParty = (key) => {
-   try{
-  firebase
-  .database()
-  .ref("/users/" + currentUser + "/party/" + key)
-  .set({ name: newName, content: newContent, location: newLocation, time: newTime })
-  .then(() => navigate("HomeScreen"))
-   }catch(err){
-     console.log(err)
+   try {
+     firebase
+     .database()
+     .ref("/users/" + currentUser + "/party/" + key)
+     .set({ name: newName, content: newContent, location: newLocation, time: newTime })
+     .then(() => { 
+      Alert.alert('Edit was successful'); 
+    }) 
+     .then(() => navigate("HomeScreen"))
+    } catch(err) {
+      console.log(err)
    }
  }
   return (
-    <View style={{ padding: 20 }}>
+    <View style={HomeStyles.addEditView}>
+      <View style={HomeStyles.AEcontainer}>
       <Input
         placeholder={name}
         label="Name"
@@ -75,6 +80,7 @@ export default function EditParty() {
         title="Update"
         onPress={() => updateParty(key)}
       ></Button>
+    </View>
     </View>
   );
 }

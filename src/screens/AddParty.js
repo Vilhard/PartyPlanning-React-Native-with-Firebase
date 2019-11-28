@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import * as firebase from "firebase";
-import { StyleSheet, Text, View } from "react-native";
+import {View, Alert} from "react-native";
 import { Input, Button } from "react-native-elements";
 import { useNavigation, useNavigationParam } from "react-navigation-hooks";
-
+import { HomeStyles } from "../styles/HomeStyles";
 
 export default function Party() {
   const { navigate } = useNavigation();
@@ -20,6 +20,9 @@ export default function Party() {
       .ref("/users/" + currentUser + "/party/")
       .push({ name: name, content: content, location: location, time: time })
       .then(() => navigate("HomeScreen"))
+      .then(() => {
+        Alert.alert("New Party Created Successfully!")
+      })
       .then((data) => {
         console.log("data ", data)
       })
@@ -32,10 +35,11 @@ export default function Party() {
   };
 
   return (
-    <View style={{flex:2, backgroundColor: "#007284" }}>
-    <View style={{ flex:3, padding: 20, backgroundColor: "##0B52B6" }}>
+    <View style={HomeStyles.addEditView}>
+    <View style={HomeStyles.AEcontainer}>
       <Input
         placeholder="Name of the party"
+        placeholderTextColor="#5E5E5E"
         label="Name"
         style={{ width: 200, borderColor: "gray", borderWidth: 1 }}
         onChangeText={name => setName(name)}
@@ -43,6 +47,7 @@ export default function Party() {
       ></Input>
       <Input
         placeholder="Content"
+        placeholderTextColor="#5E5E5E"
         label="Content"
         style={{
           width: 200,
@@ -54,6 +59,7 @@ export default function Party() {
       ></Input>
       <Input
         placeholder="Location"
+        placeholderTextColor="#5E5E5E"
         label="Location"
         style={{
           color:'white',
@@ -66,6 +72,7 @@ export default function Party() {
       ></Input>
       <Input
         placeholder="Time"
+        placeholderTextColor="#5E5E5E"
         label="Time"
         style={{
           width: 200,
@@ -81,6 +88,6 @@ export default function Party() {
         onPress={saveItem}
       ></Button>
     </View>
-  </View>
+    </View>
   );
 }
