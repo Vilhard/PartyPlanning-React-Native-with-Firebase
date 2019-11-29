@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import * as firebase from "firebase";
 import {View, Alert} from "react-native";
 import { Input, Button } from "react-native-elements";
-import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+import { useNavigation } from "react-navigation-hooks";
 import { HomeStyles } from "../styles/HomeStyles";
 
 export default function Party() {

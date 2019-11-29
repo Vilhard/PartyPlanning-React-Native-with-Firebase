@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, Alert, TouchableOpacity } from "react-native";
-import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+import { useNavigation } from "react-navigation-hooks";
 import { HomeStyles } from "../styles/HomeStyles";
 import * as firebase from "firebase";
 
@@ -13,19 +13,12 @@ export default function SignUp() {
   handleSignUp = () => {
     try {
     firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((response) => {
-      firebase.auth().currentUser.updateProfile({
-        displayName : email,
-      }).then(() => {
-        firebase.database().ref("users/" + firebase.auth().currentUser.uid).set(firebase.auth().currentUser)
-      })
-    }) 
     .then(() => navigate("HomeScreen"))
     .catch(error => {
       setError(Alert.alert(error.message));
     })
-  }catch(err){
-    Alert.alert(err)
+  }catch(e){
+    console.log(e)
   }
 }
   

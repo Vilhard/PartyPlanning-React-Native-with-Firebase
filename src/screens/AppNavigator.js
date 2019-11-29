@@ -62,7 +62,7 @@ const AppNavigator = createStackNavigator(
     PartyInfo: {
       screen: PartyInfo,
       navigationOptions: {
-        title: "Details",
+
       }
     }
   },

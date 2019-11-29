@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, Alert, TouchableOpacity } from "react-native";
-import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+import { useNavigation } from "react-navigation-hooks";
 import { HomeStyles } from "../styles/HomeStyles";
 import * as firebase from "firebase";
 

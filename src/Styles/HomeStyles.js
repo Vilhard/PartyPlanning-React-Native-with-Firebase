@@ -56,7 +56,7 @@ export const HomeStyles = StyleSheet.create({
     color: "white"
   },
   itemContent: {
-    fontSize: 14,
+    fontSize: 16,
     textAlign: "center",
     fontFamily: "Montserrat-Light",
     color: "white"
@@ -87,6 +87,36 @@ export const HomeStyles = StyleSheet.create({
   }, 
   AEcontainer: {
     padding: 20, 
+  },
+  partyContainer: {
+    flex:1, 
+    backgroundColor: "#222E50",
+  },
+  partyText: {
+    fontFamily: "Montserrat-Light",
+    fontSize: 20,
+    color: "white",
+    marginLeft: 10,
+    marginRight: 5,
+    paddingBottom: 10
+  },
+  partyText2: {
+    
+    fontSize: 16,
+    color: "white",
+  },
+  partyTextBold: {
+    fontFamily: 'Montserrat-Bold',
+    textAlign:"center",
+    fontWeight: "bold",
+    fontSize: 28,
+    color: "white",
+    marginLeft: 5,
+    marginBottom: 10
+  },
+  map: {
+    marginTop: 30,
+    marginBottom: 30
   },
   box: {
     width: "80%",
@@ -148,5 +178,5 @@ export const HomeStyles = StyleSheet.create({
     height: 100,
     justifyContent: "center",
     marginTop: 10
-  }
+  },
 });

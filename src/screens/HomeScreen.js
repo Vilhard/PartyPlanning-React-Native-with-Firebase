@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  ActivityIndicator
 } from "react-native";
-import { Button, Icon } from "react-native-elements";
-import { useNavigation, useNavigationParam } from "react-navigation-hooks";
+import { Icon } from "react-native-elements";
+import { useNavigation } from "react-navigation-hooks";
 import firebase from "../../config/Firebase";
 import * as Font from 'expo-font';
 import { HomeStyles } from "../styles/HomeStyles";
@@ -28,26 +27,26 @@ export default function HomeScreen() {
       'Montserrat-Light': require('../../assets/fonts/Montserrat-Light.ttf'),
       'Montserrat-Bold': require('../../assets/fonts/Montserrat-SemiBold.ttf'),
     });
+    handleItems();
+    getImage();
+  }, []);
+
+  handleItems = () => {
     firebase
       .database()
-      .ref("/users/" + currentUser + "/party/")
+      .ref("/users/" + currentUser +"/party/")
       .on("value", snapshot => {
         if (!snapshot.exists()) {
           console.log("data not found")
-          const empty = 0
-          const prods = Object.values(empty);
-          setPartyList(prods);
         }else {
           const data = snapshot.val();
           const prods = Object.values(data);
           const key = Object.keys(data);
-          console.log(data)
           setPartyList(prods);
           setKey(key);
         }
       });
-      getImage();
-  }, []);
+  }
 
   handleSignout = () => {
     try {
@@ -57,17 +56,19 @@ export default function HomeScreen() {
       console.log(e)
     }
   } 
-
+  
   getImage = () => {
     const images = firebase.storage().ref().child('images/');
-    const image = images.child('test-image');
-    image.getDownloadURL().then((url) => {setPhoto(url)})
+    const image = images.child(currentUser);
+    image.getDownloadURL().then((url) => {setPhoto(url)}).catch((e) => {
+      console.log(e)
+    })
   }
 
   onChooseImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync();
     if (!result.cancelled) {
-      uploadImage(result.uri, "test-image")
+      uploadImage(result.uri, currentUser)
       .then(() => {
           Alert.alert("Success");
           getImage();
@@ -78,10 +79,10 @@ export default function HomeScreen() {
     }
   }
   
-  uploadImage = async (uri, imageName) => {
+  uploadImage = async (uri, currentUser) => {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase.storage().ref("images/" + imageName);
+    var ref = firebase.storage().ref("images/" + currentUser);
     return ref.put(blob)
     .then(() => {
       return ref.getDownloadURL();
@@ -108,7 +109,7 @@ export default function HomeScreen() {
           </View>
           <Icon name="sign-out" type='font-awesome' color="#FFF" size={30} onPress={() => Alert.alert(
                         "Logout",
-                        "Are you sure you wanna logout?",
+                        "Are you sure you want to logout?",
                         [
                           {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
                           {text: 'Yes', onPress: () => handleSignout()},
@@ -125,17 +126,28 @@ export default function HomeScreen() {
                 <View key={index} style={HomeStyles.box}>
                     <Text  style={HomeStyles.itemHeader}>{item.name}</Text>
                     <Text style={HomeStyles.itemContent}>{item.content}</Text>
-                    <Text style={HomeStyles.itemText}>{item.location}</Text>
-                    <Text style={HomeStyles.itemText}>{item.time}</Text>
+                    <Text style={HomeStyles.itemContent}>{item.time}</Text>
                   <View style={HomeStyles.iconList}>
                     <Icon
                       raised
                       name="edit"
                       type="font-awesome"
                       size={20}
-                      color="#f50"
+                      color="#3F79BF"
                       onPress={() => {
                         navigate("EditParty", { key: key[index],
+                          name: item.name, content:item.content, location:item.location, time: item.time
+                        });
+                      }}
+                    />
+                    <Icon
+                      raised
+                      name="info-circle"
+                      type="font-awesome"
+                      size={20}
+                      color="#6F60C7"
+                      onPress={() => {
+                        navigate("PartyInfo", {
                           name: item.name, content:item.content, location:item.location, time: item.time
                         });
                       }}
@@ -145,7 +157,7 @@ export default function HomeScreen() {
                       name="trash"
                       type="font-awesome"
                       size={20}
-                      color="#f50"
+                      color="#BF3F3F"
                       onPress={() => Alert.alert(
                         "Delete",
                         "Are you sure you wanna delete this Party?",
@@ -155,16 +167,6 @@ export default function HomeScreen() {
                         ],
                         { cancelable: false }
                       )}
-                    />
-                    <Icon
-                      raised
-                      name="info-circle"
-                      type="font-awesome"
-                      size={20}
-                      color="#f50"
-                      onPress={() => {
-                        navigate("PartyInfo");
-                      }}
                     />
                   </View>
                 </View>
