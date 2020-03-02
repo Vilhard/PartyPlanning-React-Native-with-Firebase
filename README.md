@@ -13,7 +13,7 @@ Is React Native project that enables user to create personal events with CRUD op
 * [Expo](https://expo.io/): 35.0.0
 
 ## Installation
- - Clone this repo to your local machine using `https://github.com/Vilhard/PartyPlanning-App-React-Native-Firebase.git`
+ - Clone this repo to your local machine using `https://github.com/Vilhard/PartyPlanning-React-Native.git`
  - Install node and npm :arrow_right: run npm install in root.
  - Install Expo to make running and building mobile applications easier.
  
