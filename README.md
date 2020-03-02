@@ -19,7 +19,7 @@ Is React Native project that enables user to create personal events with CRUD op
  
  - Create Firebase account and add new project :arrow_right: create Realtime Database and change rules 
 
- ´´´
+ ´
  {
   "rules": {
       ".read": true,
@@ -27,11 +27,11 @@ Is React Native project that enables user to create personal events with CRUD op
   }
 }
 
-´´´
+´
 - Head to authentication and enable Email/Password Sign-in method
 - Go to Project settings and copy your Firebase SDK snippet to your project
 
-´´´
+´
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -42,7 +42,7 @@ const firebaseConfig = {
   appId: process.env.APP_ID,
   measurementId: process.env.MEASUREMENT_ID
 };
-´´´
+´
 - Run project in terminal with expo start or npm start :arrow_right: scan QR code with Expo Client on your phone or download Android Studio and run it on your computer.
 
 
